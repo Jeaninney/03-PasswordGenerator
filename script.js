@@ -124,7 +124,7 @@ function setPassword () {
             password = password + symbol[(Math.floor(Math.random() * symbol.length))];
         }
     }
-    prompt(password);
+    alert(password);
 
 }
 
