@@ -11,16 +11,14 @@ var numeric = "0123456789 ".split("");
 var symbol = "!@#$%^&*".split("");
 var pwdOptions = [];
 var password = [];
-var optionNotChosen = true;
+var pwdOptionsArr = [];
+var missingOptions = true;
+var check;
 
-var options = [lower, upper, nums, symbols] //holds the kinds of options
-for (var m=0; m <4; m++){
-    pwdOptions[m]
-}
 
 function collectPwdLength () {
     pwdLength = prompt("How long would you like the password to be?");
-    while (pwdLength < 8 || pwdLength > 128) {
+    while (pwdLength < 4 || pwdLength > 128) {
         alert("Sorry, the password length must be at least 8 characters and no more than 128 characters. Please select a valid length between 8 and 128.");
         pwdLength = prompt("How long would you like the password to be?");
     }
@@ -50,50 +48,113 @@ function collectPwdOptions () {
     }
     
 }
+function setPwdOptionsArr () {
+        //This loop fills up my array with the options
+        for (var q=0; q < pwdLength; q++){
+        var nummy = Math.floor(Math.random() * pwdOptions.length); //selects the character address in the array
+        pwdOptionsArr.push(pwdOptions[nummy]);
+        }
+        //This for loop is only for me to checkthat the array was written as expected
+        for (var k=0; k < pwdOptionsArr.length; k++){
+        console.log("The option in the array is " + pwdOptionsArr[k] );
+        }
+        console.log(pwdOptionsArr.indexOf("l"));
+        console.log(pwdOptionsArr.indexOf("u"));
+        console.log(pwdOptionsArr.indexOf("n"));
+        console.log(pwdOptionsArr.indexOf("s"));
+}
+function checkForLower () {
+    if ((lower) && pwdOptionsArr.indexOf("l")>-1) {
+        return true;
+    }
+    else if (lower == false) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+function checkForUpper () {
+    if ((upper) && pwdOptionsArr.indexOf("l")>-1) {
+        return true;
+    }
+    else if (upper == false) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+function checkForNumber () {
+    if ((nums) && pwdOptionsArr.indexOf("l")>-1) {
+        return true;
+    }
+    else if (nums == false) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+function checkForSymbol () {
+    if ((symbols) && pwdOptionsArr.indexOf("l")>-1) {
+        return true;
+    }
+    else if (symbols == false) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+function setPassword () {
+    for (y=0; y<pwdOptionsArr.length; y++){
+        if (pwdOptionsArr[y] == "l"){
+            password = password + alphabet[(Math.floor(Math.random() * alphabet.length))];
+        }
+        else if (pwdOptionsArr[y] == "u") {
+            password = password + alphabet[(Math.floor(Math.random() * alphabet.length))].toUpperCase();
+        }
+        else if (pwdOptionsArr[y]=="n") {
+            password = password + numeric[(Math.floor(Math.random() * numeric.length))];            
+        }
+        else {
+            password = password + symbol[(Math.floor(Math.random() * symbol.length))];
+        }
+    }
+    prompt(password);
+
+}
+
+
 collectPwdLength();
-
-// function setOptionsArray (pwdLength) {
-//     for (var g=0; g < .length; g++){
-
-//     }
-// }
-
 collectPwdOptions();
+setPwdOptionsArr();
 
-if (pwdLength < 8 || pwdLength > 128){
-    alert("Sorry, the password length must be at least 8 characters and no more than 128 characters. Please select a valid length between 8 and 128.")
-    prompt("How long would you like the password to be?");
+while (missingOptions) {
+    if ((checkForLower)&&(checkForUpper)&&(checkForNumber)&&(checkForSymbol)){
+    console.log("All good");
+    missingOptions = false;
+    }
+    else {
+    setPwdOptionsArr();
+    missingOptions=true;
+    }
 }
-
-
-// I added this loop just to see if it had any issues storing any of the symbold in the Array
-for (var k=0; k < symbol.length; k++){
-    console.log("The symbol is " + symbol[k] );
-}
-
-function selectOption () {
-
-}
-
-function generateChar (ar) {
-    var num = Math.floor(Math.random() * ar.length);
-    return ar[num];
-}
-
-
-
-
-console.log("Randomly generated Number " + generateChar (numeric));
+setPassword();
 
 
 // Write password to the #password input
 function writePassword() {
-  var password = generatePassword();
+//   var password = generatePassword();
   var passwordText = document.querySelector("#password");
 
   passwordText.value = password;
 
 }
+writePassword();
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
