@@ -18,7 +18,7 @@ var check;
 
 function collectPwdLength () {
     pwdLength = prompt("How long would you like the password to be?");
-    while (pwdLength < 4 || pwdLength > 128) {
+    while (pwdLength < 8 || pwdLength > 128) {
         alert("Sorry, the password length must be at least 8 characters and no more than 128 characters. Please select a valid length between 8 and 128.");
         pwdLength = prompt("How long would you like the password to be?");
     }
@@ -76,7 +76,7 @@ function checkForLower () {
 }
 
 function checkForUpper () {
-    if ((upper) && pwdOptionsArr.indexOf("l")>-1) {
+    if ((upper) && pwdOptionsArr.indexOf("l")>-1) || {
         return true;
     }
     else if (upper == false) {
