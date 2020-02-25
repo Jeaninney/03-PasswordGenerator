@@ -7,7 +7,7 @@ var upper //set in collectPwdOptions.  = confirm("Would you like the password to
 var nums //set in collectPwdOptions.  = confirm("Would you like the password to contain NUMBERS?");
 var symbols //set in collectPwdOptions.  = confirm("Would you like the password to contain SYMBOLS?");
 var alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
-var numeric = "0123456789 ".split("");
+var numeric = "0123456789".split("");
 var symbol = "!@#$%^&*".split("");
 var pwdOptions = [];
 var password = [];
@@ -16,11 +16,17 @@ var missingOptions = true;
 var check;
 
 
+
 function collectPwdLength () {
     pwdLength = prompt("How long would you like the password to be?");
-    while (pwdLength < 8 || pwdLength > 128) {
-        alert("Sorry, the password length must be at least 8 characters and no more than 128 characters. Please select a valid length between 8 and 128.");
+    var numberifyLength = parseInt(pwdLength);
+    if (isNaN(numberifyLength)){
+        console.log("Is NaN");
+    }
+    while ((pwdLength < 8 || pwdLength > 128) || (isNaN(numberifyLength))) {
+        alert("Sorry, the password length must be a number and at least 8 characters and no more than 128 characters. Please select a valid length between 8 and 128.");
         pwdLength = prompt("How long would you like the password to be?");
+        numberifyLength = parseInt(pwdLength);
     }
     alert("Password length will be " + pwdLength);
 }
@@ -76,7 +82,7 @@ function checkForLower () {
 }
 
 function checkForUpper () {
-    if ((upper) && pwdOptionsArr.indexOf("l")>-1) || {
+    if ((upper) && pwdOptionsArr.indexOf("l")>-1) {
         return true;
     }
     else if (upper == false) {
